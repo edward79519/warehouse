@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import Stock
 from .form import StockModelForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def index(request):
     template = loader.get_template('stock/list.html')
     stock_list = Stock.objects.order_by('-stock_addtime')
@@ -13,6 +15,7 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
 def stock_add(request):
     form = StockModelForm()
     template = loader.get_template('stock/addform.html')
@@ -26,6 +29,7 @@ def stock_add(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
 def stock_update(request, stock_id):
     stock = Stock.objects.get(pk=stock_id)
     form = StockModelForm(instance=stock)
@@ -41,6 +45,7 @@ def stock_update(request, stock_id):
 
     return HttpResponse(template.render(context, request))
 
+@login_required
 def stock_delete(request, stock_id):
     stock = Stock.objects.get(pk=stock_id)
     template = loader.get_template('stock/delete.html')
