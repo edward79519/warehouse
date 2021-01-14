@@ -1,0 +1,13 @@
+{% extends 'frame/base.html' %}
+
+{% block title %} 刪除 {{stock.id }} {% endblock %}
+{% block content %}
+<h1 class="mt-5">是否確定刪除 {{ stock.id }} - {{ stock.stock_name }}?</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input class="btn btn-outline-primary" name="Submit" type="button" id="Submit" onClick="javascript:history.back(1)" value="Back"/>
+    <input class="btn btn-danger" type="submit" value="DELETE" />
+</form>
+
+{% endblock %}

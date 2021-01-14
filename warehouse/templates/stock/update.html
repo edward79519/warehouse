@@ -1,0 +1,86 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}新增資料{% endblock %}
+{% block content %}
+
+<h1 class="mt-5">更新資料</h1>
+
+<form class="was-validated" action="" method="POST">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="col-md-1 mb-3">
+            <label for="{{ form.stock_id.name }}">項次</label>
+            {{ form.stock_id }}
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="{{ form.stock_serial.name }}">料號</label>
+            {{ form.stock_serial }}
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="{{ form.stock_name.name}}">品名</label>
+            {{ form.stock_name }}
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="{{ form.stock_specmain.name }}">規格一</label>
+            {{ form.stock_specmain }}
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="{{ form.stock_specsub.name }}">規格二</label>
+            {{ form.stock_specsub }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-2 mb-3">
+            <label for="{{ form.stock_cnts.name }}">數量</label>
+            {{ form.stock_cnts }}
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="{{ form.stock_totalcnt.name }}">合計</label>
+            {{ form.stock_totalcnt }}
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="{{ form.stock_price.name }}">單價</label>
+            {{ form.stock_price }}
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="{{ form.stock_totalprice.name }}">總價</label>
+            {{ form.stock_totalprice }}
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <label for="{{ form.stock_intime.name }}">入庫時間</label>
+            {{ form.stock_intime }}
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="{{ form.stock_outtime.name }}">出庫時間</label>
+            {{ form.stock_outtime }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="{{ form.stock_comp.name }}">廠商</label>
+            {{ form.stock_comp }}
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="{{ form.stock_compcatgo.name }}">公司別</label>
+            {{ form.stock_compcatgo }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="{{ form.stock_warehouse.name }}">倉庫</label>
+            {{ form.stock_warehouse }}
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="{{ form.stock_project.name }}">專案</label>
+            {{ form.stock_project }}
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="{{ form.stock_sign.name }}">簽收人</label>
+            {{ form.stock_sign }}
+        </div>
+    </div>
+    <input class="btn btn-outline-primary" type="reset" value="清除輸入">
+    <button class="btn btn-primary" type="submit">儲存</button>
+</form>
+{% endblock %}
