@@ -1,0 +1,58 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}專案清單{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">專案一覽</h1>
+            <div class="mb-3">
+            {% if user.is_authenticated %}
+                <a href="add/" class="btn btn-primary">新增專案</a>
+            {% endif %}
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive-sm">
+                <div class="table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:6em">專案編號</th>
+                                <th scope="col">專案名稱</th>
+                                <th scope="col">負責人</th>
+                                <th scope="col">狀態</th>
+                                <th scope="col">起始時間</th>
+                                <th scope="col">結束時間</th>
+                                <th scope="col">備註</th>
+                                <th scope="col">動作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for project in proj_list %}
+                            <tr>
+                                <td>{{ project.proj_id }}</td>
+                                <td>{{ project.proj_name }}</td>
+                                <td>{{ project.proj_owner }}</td>
+                                <td>{{ project.proj_status }}</td>
+                                <td>{{ project.proj_uptime }}</td>
+                                <td>{{ project.proj_downtime }}</td>
+                                <td>{{ project.proj_remark }}</td>
+                                <td>
+                                    <a href="{% url 'Project_update' project.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

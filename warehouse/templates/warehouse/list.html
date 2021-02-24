@@ -1,0 +1,46 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}倉庫清單{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">倉庫一覽</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive-sm">
+                <div class="table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:6em">倉庫序號</th>
+                                <th scope="col">倉庫名稱</th>
+                                <th scope="col">負責人</th>
+                                <th scope="col">地點</th>
+                                <th scope="col">備註</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for house in house_list %}
+                            <tr>
+                                <td>{{ house.house_id }}</td>
+                                <td>{{ house.house_name }}</td>
+                                <td>{{ house.house_sponsor }}</td>
+                                <td>{{ house.house_loc }}</td>
+                                <td>{{ house.house_remark }}</td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

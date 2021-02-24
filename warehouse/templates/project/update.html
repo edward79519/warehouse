@@ -1,0 +1,64 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}更新專案{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">更新專案: {{ project.proj_id }}-{{ project.proj_name }} </h1>
+        </div>
+    </div>
+    <form class="needs-validation" action="" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="form-row mb-3">
+            <div class="col-lg-3">
+                <label for="id_{{ form.proj_id.name }}">專案編號</label>
+                {{ form.proj_id }}
+            </div>
+            <div class="col-lg">
+                <label for="id_{{ form.proj_name.name }}">專案名稱</label>
+                {{ form.proj_name }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.proj_owner.name }}">負責人</label>
+                {{ form.proj_owner }}
+            </div>
+        </div>
+        <div class="form-row mb-3 align-items-end">
+            <div class="col-lg-3">
+                <label for="id_{{ form.proj_stauts.name }}">狀態</label>
+                {{ form.proj_status }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.proj_uptime.name }}">開始時間</label>
+                {{ form.proj_uptime }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.proj_downtime.name }}">結束時間</label>
+                {{ form.proj_downtime }}
+            </div>
+            <div class="col-lg-3">
+                <div class="custom-control custom-switch">
+                    {{ form.proj_isvalid }}
+                    <label class="custom-control-label" for="id_{{ form.proj_isvalid.name }}">是否可用</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-lg-12">
+                <label for="id_{{ form.proj_remark.name }}">備註</label>
+                {{ form.proj_remark }}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+            <input class="btn btn-outline-primary" type="reset" value="清除輸入">
+            <button class="btn btn-primary" type="submit">儲存</button>
+          </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

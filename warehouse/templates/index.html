@@ -2,12 +2,12 @@
 
 {% block title %}Inaenergy{% endblock %}
 {% block content %}
-<h1 class="mt-5">歡迎進入寶晶能源庫存管理系統!</h1>
-
-{% if request.user.is_authenticated %}
-    <p>{{request.user}} 您已經登入系統，依照選單進行工作。</p>
-{% else %}
-    <p>您未登入，點選 <a href="/accounts/login/">登入</a> 以進一步操作。</p>
-{% endif %}
-
+<div class="container">
+    <h1 class="mt-5">歡迎進入寶晶能源庫存管理系統!</h1>
+    {% if request.user.is_authenticated %}
+        <p>{{request.user}} 您已經登入系統，依照選單進行工作。</p>
+    {% else %}
+        <p>您未登入，點選 <a href="/accounts/login/">登入</a> 以進一步操作。</p>
+    {% endif %}
+</div>
 {% endblock %}

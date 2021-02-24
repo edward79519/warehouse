@@ -1,0 +1,70 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}出入庫清單{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">出入庫一覽</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive-sm">
+                <div class="table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:6em">序號</th>
+                                <th scope="col">品項</th>
+                                <th scope="col">主規格</th>
+                                <th scope="col">副規格</th>
+                                <th scope="col">數量</th>
+                                <th scope="col">幣別</th>
+                                <th scope="col">單價</th>
+                                <th scope="col">入出庫</th>
+                                <th scope="col">入庫時間</th>
+                                <th scope="col">出庫時間</th>
+                                <th scope="col">廠商</th>
+                                <th scope="col">寶晶單位</th>
+                                <th scope="col">專案</th>
+                                <th scope="col">倉庫</th>
+                                <th scope="col">簽收人</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for stock in stock_list %}
+                            <tr>
+                                <td>{{ stock.stock_sn }}</td>
+                                <td>{{ stock.stock_item }}</td>
+                                <td>{{ stock.stock_specmain }}</td>
+                                <td>{{ stock.stock_specsub }}</td>
+                                <td>{{ stock.stock_cnt }}</td>
+                                <td>{{ stock.stock_currency }}</td>
+                                <td>{{ stock.stock_price }}</td>
+                                <td>{{ stock.stock_change }}</td>
+                                {% if stock.stock_change == '入庫' %}
+                                    <td>{{ stock.stock_time }}</td>
+                                    <td> -- </td>
+                                {% else %}
+                                    <td> -- </td>
+                                    <td>{{ stock.stock_time }}</td>
+                                {% endif %}
+                                <td>{{ stock.stock_comp.comp_name }}</td>
+                                <td>{{ stock.stock_inaunit.ina_shortname }}</td>
+                                <td>{{ stock.stock_proj.proj_name }}</td>
+                                <td>{{ stock.stock_warehouse.house_name }}</td>
+                                <td>{{ stock.stock_sign }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
