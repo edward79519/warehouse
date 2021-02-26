@@ -62,6 +62,7 @@ class Company(models.Model):
     comp_name = models.CharField(max_length=100)
     comp_spon = models.CharField(max_length=20, null=True, blank=True)
     comp_tel = models.CharField(max_length=20, null=True, blank=True)
+    comp_email = models.EmailField(null=True, blank=True)
     comp_remark = models.CharField(max_length=200, null=True, blank=True)
     comp_addtime = models.DateTimeField(auto_now_add=True)
     comp_updatetime = models.DateTimeField(auto_now=True)

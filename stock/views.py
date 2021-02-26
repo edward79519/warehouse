@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import Stock, Company, Inaunit, Project, Warehouse, Stock2
-from .form import StockModelForm, Stock2ModelForm, ProjectModelForm
+from .form import StockModelForm, Stock2ModelForm, ProjectModelForm, CompanyModelForm
+from .form import InaunitModelForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -45,7 +46,6 @@ def stock_update(request, stock_id):
     context = {
         'form': form
     }
-
     return HttpResponse(template.render(context, request))
 
 
@@ -61,7 +61,6 @@ def stock_delete(request, stock_id):
     context = {
         'stock': stock
     }
-
     return HttpResponse(template.render(context, request))
 
 
@@ -72,19 +71,45 @@ def comp(request):
     context = {
         'comp_list': comp_list,
     }
-
     return HttpResponse(template.render(context, request))
 
 
 @login_required
 def inaunit(request):
-    template = loader.get_template('inaunit/list.html')
     inaunit_list = Inaunit.objects.order_by("ina_id")
+    form = InaunitModelForm()
+
+    if request.method == "POST":
+        form = InaunitModelForm(request.POST)
+        if form.is_valid() and request.user.is_authenticated:
+            form.save()
+        return redirect("/stock/inaunit/")
+
+    template = loader.get_template('inaunit/list.html')
+
     context = {
         'inaunit_list': inaunit_list,
+        'form': form,
     }
-
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def inaunitupdate(request, ina_id):
+    inaunit = Inaunit.objects.get(id=ina_id)
+    form = InaunitModelForm(instance=inaunit)
+    template = loader.get_template('inaunit/update.html')
+    if request.method == 'POST':
+        form = InaunitModelForm(request.POST, instance=inaunit)
+        if form.is_valid():
+            form.save()
+        return redirect("/stock/inaunit/")
+    context = {
+        'inaunit': inaunit,
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+
 
 @login_required
 def project(request):
@@ -93,7 +118,6 @@ def project(request):
     context = {
         'proj_list': proj_list,
     }
-
     return HttpResponse(template.render(context, request))
 
 
@@ -104,7 +128,6 @@ def warehouse(request):
     context = {
         'house_list': house_list,
     }
-
     return HttpResponse(template.render(context, request))
 
 
@@ -115,8 +138,8 @@ def stock(request):
     context = {
         'stock_list': stock_list,
     }
-
     return HttpResponse(template.render(context, request))
+
 
 @login_required
 def stockadd(request):
@@ -132,6 +155,7 @@ def stockadd(request):
     }
     return HttpResponse(template.render(context, request))
 
+
 @login_required
 def projectadd(request):
     form = ProjectModelForm()
@@ -145,6 +169,7 @@ def projectadd(request):
         'form': form,
     }
     return HttpResponse(template.render(context, request))
+
 
 @login_required
 def projectupdate(request, project_id):
@@ -161,3 +186,36 @@ def projectupdate(request, project_id):
         'form': form,
     }
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def companyadd(request):
+    form = CompanyModelForm()
+    template = loader.get_template('company/add.html')
+    if request.method == 'POST':
+        form = CompanyModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('../')
+    context = {
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def companyupdate(request, comp_id):
+    company = Company.objects.get(id=comp_id)
+    form = CompanyModelForm(instance=company)
+    template = loader.get_template('company/update.html')
+    if request.method == "POST":
+        form = CompanyModelForm(request.POST, instance=company)
+        if form.is_valid():
+            form.save()
+        return redirect('/stock/company/')
+    context = {
+        'company': company,
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+

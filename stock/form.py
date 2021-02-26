@@ -1,5 +1,5 @@
 from django import forms
-from .models import Stock, Stock2, Project
+from .models import Stock, Stock2, Project, Company, Inaunit
 
 class StockModelForm(forms.ModelForm):
 
@@ -47,4 +47,33 @@ class ProjectModelForm(forms.ModelForm):
             'proj_isvalid': forms.CheckboxInput(attrs={'class': 'custom-control-input'}),
             'proj_uptime': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'proj_downtime': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+
+
+class CompanyModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Company
+        fields = '__all__'
+        widgets = {
+            'comp_id': forms.TextInput(attrs={'class': 'form-control'}),
+            'comp_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'comp_spon': forms.TextInput(attrs={'class': 'form-control'}),
+            'comp_tel': forms.TextInput(attrs={'class': 'form-control'}),
+            'comp_email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'comp_remark': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+
+class InaunitModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Inaunit
+        fields = '__all__'
+        widgets = {
+            'ina_id': forms.TextInput(attrs={'class': 'form-control'}),
+            'ina_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'ina_shortname': forms.TextInput(attrs={'class': 'form-control'}),
+            'ina_remark': forms.TextInput(attrs={'class': 'form-control'}),
+            'ina_isvalid': forms.HiddenInput(),
         }

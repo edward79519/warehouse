@@ -20,6 +20,7 @@
                                 <th scope="col">單位簡稱</th>
                                 <th scope="col">單位全名</th>
                                 <th scope="col">備註</th>
+                                <th scope="col">動作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,9 +30,27 @@
                                 <td>{{ ina.ina_shortname }}</td>
                                 <td>{{ ina.ina_name }}</td>
                                 <td>{{ ina.ina_remark }}</td>
+                                <td>
+                                    <a href="{% url 'Ina_update' ina.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <td>{{ form.ina_id }}</td>
+                                    <td>{{ form.ina_shortname }}</td>
+                                    <td>{{ form.ina_name }}</td>
+                                    <td>{{ form.ina_remark}}</td>
+                                    <td>
+                                        {{ form.ina_isvalid }}
+                                        <button class="btn btn-primary btn-sm" type="submit">新增</button>
+                                    </td>
+                                </form>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

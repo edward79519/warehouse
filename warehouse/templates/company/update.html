@@ -1,0 +1,55 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}更新廠商{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">更新廠商: {{ company.comp_id }}-{{ company.comp_id }}</h1>
+
+        </div>
+    </div>
+    <form class="needs-validation" action="" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="form-row mb-3">
+            <div class="col-lg-3">
+                <label for="id_{{ form.comp_id.name }}">公司編號</label>
+                {{ form.comp_id }}
+            </div>
+            <div class="col-lg">
+                <label for="id_{{ form.comp_name.name }}">公司名稱</label>
+                {{ form.comp_name }}
+            </div>
+        </div>
+        <div class="form-row mb-3 align-items-end">
+            <div class="col-lg-3">
+                <label for="id_{{ form.comp_spon.name }}">聯絡人</label>
+                {{ form.comp_spon }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.comp_tel.name }}">電話</label>
+                {{ form.comp_tel }}
+            </div>
+            <div class="col-lg">
+                <label for="id_{{ form.comp_email.name }}">E-mail</label>
+                {{ form.comp_email }}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-lg-12">
+                <label for="id_{{ form.comp_remark.name }}">備註</label>
+                {{ form.comp_remark }}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+            <input class="btn btn-outline-primary" type="reset" value="清除輸入">
+            <button class="btn btn-primary" type="submit">儲存</button>
+          </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
