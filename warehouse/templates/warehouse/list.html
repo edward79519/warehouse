@@ -21,6 +21,7 @@
                                 <th scope="col">負責人</th>
                                 <th scope="col">地點</th>
                                 <th scope="col">備註</th>
+                                <th scope="col">動作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,10 +32,28 @@
                                 <td>{{ house.house_sponsor }}</td>
                                 <td>{{ house.house_loc }}</td>
                                 <td>{{ house.house_remark }}</td>
-
+                                <td>
+                                    <a href="{% url 'Warehouse_update' house.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <td>{{ form.house_id }}</td>
+                                    <td>{{ form.house_name }}</td>
+                                    <td>{{ form.house_sponsor }}</td>
+                                    <td>{{ form.house_loc }}</td>
+                                    <td>{{ form.house_remark }}</td>
+                                    <td>
+                                        {{ form.house_isvalid }}
+                                        <button class="btn btn-primary btn-sm" type="submit">新增</button>
+                                    </td>
+                                </form>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

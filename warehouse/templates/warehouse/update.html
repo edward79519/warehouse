@@ -1,0 +1,49 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}更新倉庫{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">更新倉庫: {{ house.house_id }}-{{ house.house_name }}</h1>
+
+        </div>
+    </div>
+    <form class="needs-validation" action="" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="form-row mb-3">
+            <div class="col-lg-3">
+                <label for="id_{{ form.house_id.name }}">倉庫編號</label>
+                {{ form.house_id }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.house_name.name }}">倉庫名稱</label>
+                {{ form.house_name }}
+            </div>
+            <div class="col-lg">
+                <label for="id_{{ form.house_sponsor.name }}">負責人</label>
+                {{ form.house_sponsor }}
+            </div>
+            <div class="col-lg">
+                <label for="id_{{ form.house_loc.name }}">地點</label>
+                {{ form.house_loc }}
+            </div>
+        </div>
+        <div class="form-row mb-3 align-items-end">
+            <div class="col-lg-12">
+                <label for="id_{{ form.house_remark.name }}">備註</label>
+                {{ form.house_remark }}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+            <input class="btn btn-outline-primary" type="reset" value="清除輸入">
+            <button class="btn btn-primary" type="submit">儲存</button>
+          </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
