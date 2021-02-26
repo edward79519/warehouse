@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import Stock, Company, Inaunit, Project, Warehouse, Stock2
 from .form import StockModelForm, Stock2ModelForm, ProjectModelForm, CompanyModelForm
-from .form import InaunitModelForm
+from .form import InaunitModelForm, WarehouseModelForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -77,16 +77,14 @@ def comp(request):
 @login_required
 def inaunit(request):
     inaunit_list = Inaunit.objects.order_by("ina_id")
+    # 新增form
     form = InaunitModelForm()
-
     if request.method == "POST":
         form = InaunitModelForm(request.POST)
         if form.is_valid() and request.user.is_authenticated:
             form.save()
         return redirect("/stock/inaunit/")
-
     template = loader.get_template('inaunit/list.html')
-
     context = {
         'inaunit_list': inaunit_list,
         'form': form,
@@ -123,13 +121,36 @@ def project(request):
 
 @login_required
 def warehouse(request):
-    template = loader.get_template('warehouse/list.html')
     house_list = Warehouse.objects.order_by("house_id")
+    form = WarehouseModelForm()
+    if request.method == 'POST':
+        form = WarehouseModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/stock/warehouse/')
+    template = loader.get_template('warehouse/list.html')
     context = {
         'house_list': house_list,
+        'form': form,
     }
     return HttpResponse(template.render(context, request))
 
+
+@login_required
+def warehouseupdate(request, house_id):
+    house = Warehouse.objects.get(id=house_id)
+    form = WarehouseModelForm(instance=house)
+    template = loader.get_template('warehouse/update.html')
+    if request.method == 'POST':
+        form = WarehouseModelForm(request.POST, instance=house)
+        if form.is_valid():
+            form.save()
+        return redirect('/stock/warehouse/')
+    context = {
+        'house': house,
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def stock(request):
@@ -146,10 +167,10 @@ def stockadd(request):
     form = Stock2ModelForm()
     template = loader.get_template('stock2/add.html')
     if request.method == "POST":
-        form = StockModelForm(request.POST)
+        form = Stock2ModelForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect("/list/")
+        return redirect("/stock/list/")
     context = {
         'form': form,
     }

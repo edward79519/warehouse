@@ -1,19 +1,96 @@
 {% extends 'frame/base.html' %}
 
-{% block title %}出入庫清單{% endblock %}
+{% block title %}庫存出入庫{% endblock %}
 {% block content %}
 
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h1 class="mt-5">出入庫一覽</h1>
+            <h1 class="mt-5">庫存出入庫</h1>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            {{ form }}
+    <form class="needs-validation" action="" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="form-row mb-3 align-items-end">
+            <div class="col-lg-3">
+                    {% for radio in form.stock_change %}
+                        <div class="custom-control custom-radio custom-control-inline">
+                            {{ radio.tag }}
+                            <label class="custom-control-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                        </div>
+                    {% endfor %}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_time.name }}">時間</label>
+                {{ form.stock_time }}
+            </div>
         </div>
-    </div>
+
+        <div class="form-row mb-3">
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_sn.name }}">料號</label>
+                {{ form.stock_sn }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_item.name }}">名稱</label>
+                {{ form.stock_item }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_specmain.name }}">主規格</label>
+                {{ form.stock_specmain }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_specsub.name }}">副規格</label>
+                {{ form.stock_specsub }}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_cnt.name }}">數量</label>
+                {{ form.stock_cnt }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_currency.name }}">幣別</label>
+                {{ form.stock_currency }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_price.name }}">單價</label>
+                {{ form.stock_price }}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_comp.name }}">廠商</label>
+                {{ form.stock_comp }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_inaunit.name }}">寶晶單位</label>
+                {{ form.stock_inaunit }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_proj.name }}">專案</label>
+                {{ form.stock_proj }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_proj.name }}">倉庫</label>
+                {{ form.stock_proj }}
+            </div>
+        </div>
+
+        <div class="form-row mb-3">
+            <div class="col-lg-3">
+                <label for="id_{{ form.stock_sign.name }}">簽收人</label>
+                {{ form.stock_sign }}
+            </div>
+        </div>
+
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+              <input class="btn btn-outline-primary" type="reset" value="清除輸入">
+              <button class="btn btn-primary" type="submit">儲存</button>
+          </div>
+        </div>
+    </form>
 </div>
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Stock, Stock2, Project, Company, Inaunit
+from .models import Stock, Stock2, Project, Company, Inaunit, Warehouse
 
 class StockModelForm(forms.ModelForm):
 
@@ -31,6 +31,22 @@ class Stock2ModelForm(forms.ModelForm):
     class Meta:
         model = Stock2
         exclude = ['stock_isvalid']
+        widgets = {
+            'stock_change': forms.RadioSelect(attrs={'class': 'custom-control-input'}),
+            'stock_sn': forms.TextInput(attrs={'class': 'form-control'}),
+            'stock_item': forms.TextInput(attrs={'class': 'form-control'}),
+            'stock_specmain': forms.TextInput(attrs={'class': 'form-control'}),
+            'stock_specsub': forms.TextInput(attrs={'class': 'form-control'}),
+            'stock_cnt': forms.NumberInput(attrs={'class': 'form-control'}),
+            'stock_currency': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'stock_time': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'stock_comp': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_inaunit': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_proj': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_warehouse': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_sign': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 class ProjectModelForm(forms.ModelForm):
@@ -76,4 +92,19 @@ class InaunitModelForm(forms.ModelForm):
             'ina_shortname': forms.TextInput(attrs={'class': 'form-control'}),
             'ina_remark': forms.TextInput(attrs={'class': 'form-control'}),
             'ina_isvalid': forms.HiddenInput(),
+        }
+
+
+class WarehouseModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Warehouse
+        fields = '__all__'
+        widgets = {
+            'house_id': forms.TextInput(attrs={'class': 'form-control'}),
+            'house_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'house_sponsor': forms.TextInput(attrs={'class': 'form-control'}),
+            'house_loc': forms.TextInput(attrs={'class': 'form-control'}),
+            'house_remark': forms.TextInput(attrs={'class': 'form-control'}),
+            'house_isvalid': forms.HiddenInput(),
         }
