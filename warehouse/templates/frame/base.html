@@ -45,7 +45,7 @@
             <a class="nav-link" href="{% url 'Warehouse_list' %}">倉庫</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/stock/">庫存進出貨清單</a>
+            <a class="nav-link" href="{% url 'Stock_list' %}">庫存進出貨清單</a>
           </li>
           <li class="nav-item">
             {% if request.user.is_authenticated %}

@@ -38,8 +38,8 @@
                                 <td>{{ project.proj_name }}</td>
                                 <td>{{ project.proj_owner }}</td>
                                 <td>{{ project.proj_status }}</td>
-                                <td>{{ project.proj_uptime }}</td>
-                                <td>{{ project.proj_downtime }}</td>
+                                <td style="width:15%">{{ project.proj_uptime|date:"m/d, Y" }}</td>
+                                <td style="width:15%">{{ project.proj_downtime|date:"m/d, Y" }}</td>
                                 <td>{{ project.proj_remark }}</td>
                                 <td>
                                     <a href="{% url 'Project_update' project.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
