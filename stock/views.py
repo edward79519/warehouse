@@ -170,12 +170,26 @@ def stockadd(request):
         form = Stock2ModelForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect("/stock/list/")
+        return redirect("/stock/")
     context = {
         'form': form,
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
+def stockupdate(request, stock_id):
+    stock = Stock2.objects.get(id=stock_id)
+    form = Stock2ModelForm(instance=stock)
+    template = loader.get_template('stock2/update.html')
+    if request.method == "POST":
+        form = Stock2ModelForm(request.POST, instance=stock)
+        if form.is_valid():
+            form.save()
+        return redirect("/stock/")
+    context = {
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def projectadd(request):

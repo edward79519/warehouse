@@ -24,7 +24,7 @@ class Stock(models.Model):
     stock_updatetime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.stock_serial + self.stock_name
+        return self.stock_serial + '_' + self.stock_name
 
 
 class Project(models.Model):
@@ -68,7 +68,7 @@ class Company(models.Model):
     comp_updatetime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.comp_id + self.comp_name
+        return self.comp_id + '_' + self.comp_name
 
 
 class Inaunit(models.Model):
@@ -81,7 +81,7 @@ class Inaunit(models.Model):
     ina_updatetime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.ina_id + self.ina_name
+        return self.ina_id + '_' + self.ina_name
 
 
 class Warehouse(models.Model):
@@ -95,7 +95,7 @@ class Warehouse(models.Model):
     house_updatetime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.house_id + self.house_name
+        return self.house_id + '_' + self.house_name
 
 
 class Stock2(models.Model):
@@ -162,3 +162,5 @@ class Stock2(models.Model):
     def __str__(self):
         return self.stock_time.strftime('%Y%m%d') + self.stock_change + self.stock_sn + self.stock_item
 
+    def totalprice(self):
+        return self.stock_cnt * self.stock_price
