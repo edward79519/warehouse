@@ -139,7 +139,7 @@ class ItemUpdateModelForm(forms.ModelForm):
 
     class Meta:
         model = Item
-        exclude = ['item_cnt', 'item_sn', 'item_cate']
+        exclude = ['item_cnt', 'item_sn', 'item_cate', 'item_isvalid']
         widgets = {
             'item_name': forms.TextInput(attrs={'class': 'form-control'}),
             'item_specmain': forms.TextInput(attrs={'class': 'form-control'}),

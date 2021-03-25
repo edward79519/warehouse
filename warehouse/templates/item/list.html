@@ -29,7 +29,7 @@
                                 <th scope="col">主規格</th>
                                 <th scope="col">副規格</th>
                                 <th scope="col">數量</th>
-                                <th scope="col" width="80px">動作</th>
+                                <th scope="col" width="140px">動作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,6 +44,7 @@
                                     <td>{{ item.item_cnt }}</td>
                                     <td>
                                         <a href="{% url 'Item_update' item.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                        <a href="{% url 'Item_delete' item.id %}" class="btn btn-danger btn-sm" role="button">刪除</a>
                                     </td>
                                 </tr>
                             {% endfor %}
