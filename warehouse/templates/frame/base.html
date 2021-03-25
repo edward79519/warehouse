@@ -36,16 +36,19 @@
             <a class="nav-link" href="{% url 'Comp_list' %}">廠商</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'Ina_list' %}">寶晶單位</a>
+            <a class="nav-link" href="{% url 'Project_list' %}">專案</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'Project_list' %}">專案</a>
+            <a class="nav-link" href="{% url 'Ina_list' %}">寶晶單位</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'Warehouse_list' %}">倉庫</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'Stock_list' %}">庫存進出貨清單</a>
+            <a class="nav-link" href="{% url 'Item_list' %}">庫存清單</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'Stockv3_list' %}">庫存進出貨清單</a>
           </li>
           <li class="nav-item">
             {% if request.user.is_authenticated %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Stock, Stock2, Project, Company, Inaunit, Warehouse
+from .models import Stock, Stock2, Project, Company, Inaunit, Warehouse, Item, Category, Stockv3
 
 class StockModelForm(forms.ModelForm):
 
@@ -108,3 +108,86 @@ class WarehouseModelForm(forms.ModelForm):
             'house_remark': forms.TextInput(attrs={'class': 'form-control'}),
             'house_isvalid': forms.HiddenInput(),
         }
+
+
+class CateModelFoem(forms.ModelForm):
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+        widgets = {
+            'cate_en': forms.TextInput(attrs={'class': 'form-control'}),
+            'cate_name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class ItemModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Item
+        exclude = ['item_cnt', 'item_isvalid']
+        widgets = {
+            'item_sn': forms.TextInput(attrs={'class': 'form-control'}),
+            'item_cate': forms.Select(attrs={'class': 'custom-select'}),
+            'item_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'item_specmain': forms.TextInput(attrs={'class': 'form-control'}),
+            'item_specsub': forms.TextInput(attrs={'class': 'form-control'}),
+            'item_remark': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+class ItemUpdateModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Item
+        exclude = ['item_cnt', 'item_sn', 'item_cate']
+        widgets = {
+            'item_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'item_specmain': forms.TextInput(attrs={'class': 'form-control'}),
+            'item_specsub': forms.TextInput(attrs={'class': 'form-control'}),
+            'item_remark': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+
+class Stock3ModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Stockv3
+        exclude = ['stock_isvalid']
+        widgets = {
+            'stock_id': forms.TextInput(attrs={'class': 'form-control'}),
+            'stock_change': forms.RadioSelect(attrs={'class': 'custom-control-input'}),
+            'stock_sn': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_cnt': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'stock_currency': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_price': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'stock_time': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'stock_comp': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_inaunit': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_proj': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_warehouse': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_sign': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class Stock3UpdateModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Stockv3
+        exclude = ['stock_isvalid', 'stock_id', 'stock_change', 'stock_sn', 'stock_time']
+        widgets = {
+            'stock_cnt': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'stock_currency': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_price': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'stock_comp': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_inaunit': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_proj': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_warehouse': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_sign': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class Stock3ConfirmModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Stockv3
+        fields = ['stock_isvalid']

@@ -15,5 +15,17 @@ urlpatterns = [
     path('', views.stock, name='Stock_list'),
     path("add/", views.stockadd, name="Stock_add"),
     path("<int:stock_id>/update/", views.stockupdate, name="Stock_update"),
+    path('item/', views.item, name='Item_list'),
+    path('item/list_del/', views.item_list_del, name='Item_list_del'),
+    path('item/add/', views.itemadd, name='Item_add'),
+    path('item/<int:item_id>/update/', views.itemupdate, name='Item_update'),
+    path('item/<int:item_id>/delete/', views.itemdelete, name='Item_delete'),
+    path('category/', views.cate, name='Cate_list'),
+    path('category/<int:cate_id>/update/', views.cateupdate, name='Cate_update'),
+    path('inout/', views.stockv3, name='Stockv3_list'),
+    path('inout/add/', views.stockv3add, name='Stockv3_add'),
+    path('inout/<int:stock_id>/update/', views.stockv3update, name='Stockv3_update'),
+    path('inout/<int:stock_id>/confirm/', views.stockv3confirm, name='Stockv3_confirm'),
+    path('inout/<int:stock_id>/delete/', views.stockv3del, name='Stockv3_delete'),
 ]
 

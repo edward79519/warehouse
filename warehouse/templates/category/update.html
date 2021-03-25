@@ -1,0 +1,35 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}更新類別{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">更新類別: {{ category.cate_en }}-{{ category.cate_name }}</h1>
+
+        </div>
+    </div>
+    <form class="needs-validation" action="" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="form-row mb-3">
+            <div class="col-lg-3">
+                <label for="id_{{ form.cate_en.name }}">類別編號</label>
+                {{ form.cate_en }}
+            </div>
+            <div class="col-lg-3">
+                <label for="id_{{ form.cate_name.name }}">類別名稱</label>
+                {{ form.cate_name }}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+            <input class="btn btn-outline-primary" type="reset" value="清除輸入">
+            <button class="btn btn-primary" type="submit">儲存</button>
+          </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

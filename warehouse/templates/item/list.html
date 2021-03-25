@@ -1,0 +1,65 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}庫存清單{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">庫存清單</h1>
+            <div class="mb-3">
+            {% if user.is_authenticated %}
+                <a href="add/" class="btn btn-primary">新增庫存品項</a>
+                <a href="list_del/" class="btn btn-secondary">已刪除庫存清單</a>
+            {% endif %}
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive-sm">
+                <div class="table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:6em">料號</th>
+                                <th scope="col">品項</th>
+                                <th scope="col">類別</th>
+                                <th scope="col">主規格</th>
+                                <th scope="col">副規格</th>
+                                <th scope="col">數量</th>
+                                <th scope="col" width="140px">動作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if item_list %}
+                            {% for item in item_list %}
+                                <tr>
+                                    <td>{{ item.item_sn }}</td>
+                                    <td>{{ item.item_name }}</td>
+                                    <td>{{ item.item_cate }}</td>
+                                    <td>{{ item.item_specmain }}</td>
+                                    <td>{{ item.item_specsub }}</td>
+                                    <td>{{ item.item_cnt }}</td>
+                                    <td>
+                                        <a href="{% url 'Item_update' item.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                        <a href="{% url 'Item_delete' item.id %}" class="btn btn-outline-danger btn-sm" role="button">刪除</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7"> 目前沒有資料！ </td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

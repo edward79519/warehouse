@@ -1,0 +1,60 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}分類清單{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">分類清單</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="table-responsive-sm">
+                <div class="table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:6em">分類編號</th>
+                                <th scope="col">分類名稱</th>
+                                <th scope="col">動作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if cate_list %}
+                            {% for cate in cate_list %}
+                                <tr>
+                                    <td>{{ cate.cate_en }}</td>
+                                    <td>{{ cate.cate_name }}</td>
+                                    <td>
+                                        <a href="{% url 'Cate_update' cate.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3"> 目前沒有資料！ </td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <td>{{ form.cate_en }}</td>
+                                    <td>{{ form.cate_name }}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" type="submit">新增</button>
+                                    </td>
+                                </form>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

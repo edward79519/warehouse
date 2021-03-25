@@ -65,6 +65,7 @@ class Company(models.Model):
     comp_email = models.EmailField(null=True, blank=True)
     comp_remark = models.CharField(max_length=200, null=True, blank=True)
     comp_addtime = models.DateTimeField(auto_now_add=True)
+    comp_isvalid = models.BooleanField(default=True)
     comp_updatetime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -164,3 +165,106 @@ class Stock2(models.Model):
 
     def totalprice(self):
         return self.stock_cnt * self.stock_price
+
+
+class Category(models.Model):
+    cate_en = models.CharField(max_length=1, unique=True)
+    cate_name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.cate_en + "_" + self.cate_name
+
+
+class Item(models.Model):
+    item_sn = models.CharField(max_length=12, unique=True)
+    item_cate = models.ForeignKey(
+        Category,
+        on_delete=models.PROTECT,
+        related_name='item_cate',
+    )
+    item_name = models.CharField(max_length=100)
+    item_specmain = models.CharField(max_length=100)
+    item_specsub = models.CharField(max_length=100, null=True, blank=True)
+    item_cnt = models.IntegerField(default=0)
+    item_isvalid = models.BooleanField(default=True)
+    item_remark = models.CharField(max_length=200, null=True, blank=True)
+    item_addtime = models.DateTimeField(auto_now_add=True)
+    item_updatetime = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "{}_{}_{}_{}".format(self.item_sn, self.item_name, self.item_specmain, self.item_specsub)
+
+    def itemadd(self, count):
+        self.item_cnt = self.item_cnt + count
+
+
+class Stockv3(models.Model):
+
+    NTD = '新台幣'
+    USD = '美金'
+    EUR = '歐元'
+    RMB = '人民幣'
+    PAY_CURRENCY_CHOICE = (
+        (NTD, '新台幣'),
+        (USD, '美金'),
+        (EUR, '歐元'),
+        (RMB, '人民幣'),
+    )
+
+    STKIN = '入庫'
+    STKOUT = '出庫'
+    STOCK_CHANGE_CHOICE = (
+        (STKIN, '入庫'),
+        (STKOUT, '出庫'),
+    )
+    stock_id = models.CharField(max_length=12)
+    stock_change = models.CharField(
+        max_length=10,
+        choices=STOCK_CHANGE_CHOICE,
+        default=STKIN,
+    )
+    stock_sn = models.ForeignKey(
+        Item,
+        on_delete=models.PROTECT,
+        related_name="stockv3_item",
+        limit_choices_to={'item_isvalid': True},
+    )
+    stock_cnt = models.IntegerField()
+    stock_currency = models.CharField(
+        max_length=20,
+        choices=PAY_CURRENCY_CHOICE,
+        default=NTD
+    )
+    stock_price = models.DecimalField(max_digits=20, decimal_places=2)
+    stock_time = models.DateField()
+    stock_comp = models.ForeignKey(
+        Company,
+        on_delete=models.PROTECT,
+        related_name='stockv3_comp',
+    )
+    stock_inaunit = models.ForeignKey(
+        Inaunit,
+        on_delete=models.PROTECT,
+        related_name='stockv3_inaunit',
+    )
+    stock_proj = models.ForeignKey(
+        Project,
+        on_delete=models.PROTECT,
+        related_name='stockv3_proj',
+    )
+    stock_warehouse = models.ForeignKey(
+        Warehouse,
+        on_delete=models.PROTECT,
+        related_name='stockv3_warehouse',
+    )
+    stock_sign = models.CharField(max_length=20)
+    stock_isvalid = models.BooleanField(default=False)
+    stock_addtime = models.DateTimeField(auto_now_add=True)
+    stock_updatetime = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.stock_time.strftime('%Y%m%d') + self.stock_change + self.stock_sn.item_name
+
+    def totalprice(self):
+        return self.stock_cnt * self.stock_price
+

@@ -1,68 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
-from .models import Stock, Company, Inaunit, Project, Warehouse, Stock2
+from django.utils import timezone
+from .models import Stock, Company, Inaunit, Project, Warehouse, Stock2, Stockv3, Item, Category
 from .form import StockModelForm, Stock2ModelForm, ProjectModelForm, CompanyModelForm
-from .form import InaunitModelForm, WarehouseModelForm
+from .form import InaunitModelForm, WarehouseModelForm, ItemModelForm, ItemUpdateModelForm, CateModelFoem, Stock3ModelForm, Stock3UpdateModelForm, Stock3ConfirmModelForm
 from django.contrib.auth.decorators import login_required
+import datetime
 # Create your views here.
-
-
-@login_required
-def index(request):
-    template = loader.get_template('stock/list.html')
-    stock_list = Stock.objects.order_by('-stock_addtime')
-    context = {
-        'stock_list': stock_list
-    }
-    return HttpResponse(template.render(context, request))
-
-
-@login_required
-def stock_add(request):
-    form = StockModelForm()
-    template = loader.get_template('stock/addform.html')
-    if request.method == "POST":
-        form = StockModelForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect("/stock/")
-    context = {
-        'form': form,
-    }
-    return HttpResponse(template.render(context, request))
-
-
-@login_required
-def stock_update(request, stock_id):
-    stock = Stock.objects.get(pk=stock_id)
-    form = StockModelForm(instance=stock)
-    template = loader.get_template('stock/update.html')
-    if request.method == 'POST':
-        form = StockModelForm(request.POST, instance=stock)
-        if form.is_valid():
-            form.save()
-        return redirect("/stock/")
-    context = {
-        'form': form
-    }
-    return HttpResponse(template.render(context, request))
-
-
-@login_required
-def stock_delete(request, stock_id):
-    stock = Stock.objects.get(pk=stock_id)
-    template = loader.get_template('stock/delete.html')
-
-    if request.method == "POST":
-        stock.delete()
-        return redirect("/stock/")
-
-    context = {
-        'stock': stock
-    }
-    return HttpResponse(template.render(context, request))
-
 
 @login_required
 def comp(request):
@@ -254,3 +199,179 @@ def companyupdate(request, comp_id):
     }
     return HttpResponse(template.render(context, request))
 
+
+@login_required
+def item(request):
+    template = loader.get_template('item/list.html')
+    item_list = Item.objects.filter(item_isvalid=True).order_by("item_sn")
+    context = {
+        'item_list': item_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def item_list_del(request):
+    template = loader.get_template('item/list_delete.html')
+    item_list = Item.objects.filter(item_isvalid=False).order_by("-item_updatetime")
+    context = {
+        'item_list': item_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+
+@login_required
+def itemadd(request):
+    form = ItemModelForm()
+    template = loader.get_template('item/add.html')
+    if request.method == 'POST':
+        cateid = request.POST['item_cate']
+        itemcnt = Item.objects.filter(item_addtime__date=timezone.now().date(), item_cate_id=cateid).count()+1
+        catename = Category.objects.get(id=cateid).cate_en
+        serial = "{}{}{}".format(catename, timezone.now().strftime("%Y%m%d"), str(itemcnt).zfill(3))
+        query = request.POST.copy()
+        query['item_sn'] = serial
+        form = ItemModelForm(query)
+        if form.is_valid():
+            form.save()
+        return redirect('/stock/item/')
+    context = {
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def itemupdate(request, item_id):
+    template = loader.get_template('item/update.html')
+    item = Item.objects.get(id=item_id)
+    form = ItemUpdateModelForm(instance=item)
+    if request.method == "POST":
+
+        form = ItemUpdateModelForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+        return redirect("../../")
+    context = {
+        'form': form,
+        'item': item,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def itemdelete(request, item_id):
+    item = Item.objects.get(id=item_id)
+    item.item_isvalid = False
+    item.save()
+    return redirect("/stock/item/")
+
+
+@login_required
+def cate(request):
+    template = loader.get_template('category/list.html')
+    cate_list = Category.objects.order_by('cate_en')
+    form = CateModelFoem()
+    if request.method == 'POST':
+        form = CateModelFoem(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/stock/category/')
+    context = {
+        'cate_list': cate_list,
+        'form': form
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def cateupdate(request, cate_id):
+    template = loader.get_template('category/update.html')
+    category = Category.objects.get(id=cate_id)
+    form = CateModelFoem(instance=category)
+    if request.method == 'POST':
+        form = CateModelFoem(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+        return redirect('/stock/category/')
+    context = {
+        'category': category,
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def stockv3(request):
+    template = loader.get_template('stockv3/list.html')
+    stock_list = Stockv3.objects.filter(stock_isvalid=True).order_by("-stock_addtime")
+    stock_list_uncheck = Stockv3.objects.filter(stock_isvalid=False).order_by("-stock_addtime")
+    context = {
+        'stock_list': stock_list,
+        'stock_list_uncheck': stock_list_uncheck,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def stockv3add(request):
+    form = Stock3ModelForm()
+    template = loader.get_template('stockv3/add.html')
+
+    if request.method == "POST":
+        count = Stockv3.objects.filter(stock_addtime__date=timezone.now().date()).count() + 1
+        serial = "{}{}".format(timezone.now().strftime('%Y%m%d'), str(count).zfill(4))
+        q = request.POST.copy()
+        q['stock_id'] = serial
+        form = Stock3ModelForm(q)
+        if form.is_valid():
+            form.save()
+        return redirect("../")
+    context = {
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def stockv3update(request, stock_id):
+    template = loader.get_template('stockv3/update.html')
+    stock = Stockv3.objects.get(id=stock_id)
+    form = Stock3UpdateModelForm(instance=stock)
+    if request.method == "POST":
+        form = Stock3UpdateModelForm(request.POST, instance=stock)
+        if form.is_valid():
+            form.save()
+        return redirect("/stock/inout/")
+    context = {
+        'stock': stock,
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required()
+def stockv3confirm(request, stock_id):
+    stock = Stockv3.objects.get(id=stock_id)
+    if not stock.stock_isvalid:
+        stock.stock_isvalid = True
+        stock.save()
+        item = Item.objects.get(id=stock.stock_sn.id)
+        if stock.stock_change == "出庫":
+            count = -stock.stock_cnt
+        else:
+            count = stock.stock_cnt
+            item.itemadd(count)
+        item.save()
+        return redirect("/stock/inout/")
+    return redirect("/stock/inout/")
+
+
+@login_required
+def stockv3del(request, stock_id):
+    stock = Stockv3.objects.get(id=stock_id)
+    if stock.stock_isvalid == False:
+        stock.delete()
+        return redirect("/stock/inout/")
+    return redirect("/stock/inout/")
