@@ -18,6 +18,7 @@ urlpatterns = [
     path('item/', views.item, name='Item_list'),
     path('item/list_del/', views.item_list_del, name='Item_list_del'),
     path('item/add/', views.itemadd, name='Item_add'),
+    path('item/<int:item_id>/', views.itemdetail, name='Item_detail'),
     path('item/<int:item_id>/update/', views.itemupdate, name='Item_update'),
     path('item/<int:item_id>/delete/', views.itemdelete, name='Item_delete'),
     path('category/', views.cate, name='Cate_list'),

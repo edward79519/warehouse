@@ -45,11 +45,16 @@
             </div>
         </div>
         <div class="form-row mb-3">
-          <div class="col-lg-12">
-              <a href="/stock/item/ " class="btn btn-outline-danger">取消</a>
-              <input class="btn btn-outline-primary" type="reset" value="清除輸入">
-              <button class="btn btn-primary" type="submit">儲存</button>
-          </div>
+            <div class="col-lg-9">
+                <a href="/stock/item/ " class="btn btn-outline-danger">取消</a>
+                <input class="btn btn-outline-primary" type="reset" value="清除輸入">
+                <button class="btn btn-primary" type="submit">儲存</button>
+            </div>
+            <div>
+                {% if item.item_isvalid %}
+                    <a href="{% url 'Item_delete' item.id %}" class="btn btn-danger" role="button">刪除</a>
+                {% endif %}
+            </div>
         </div>
     </form>
 </div>

@@ -31,7 +31,7 @@
                         {% if item_list %}
                             {% for item in item_list %}
                                 <tr>
-                                    <td>{{ item.item_sn }}</td>
+                                    <td><a href="{% url 'Item_detail' item.id %}">{{ item.item_sn }}</a></td>
                                     <td>{{ item.item_name }}</td>
                                     <td>{{ item.item_cate }}</td>
                                     <td>{{ item.item_specmain }}</td>

@@ -159,7 +159,7 @@
                                     {% endif %}
                                 </td>
                                 <td>{{ stock.stock_id }}</td>
-                                <td>{{ stock.stock_sn.item_sn }}</td>
+                                <td><a href="{% url 'Item_detail' stock.stock_sn.id %}">{{ stock.stock_sn.item_sn }}</a></td>
                                 <td>{{ stock.stock_sn.item_name }}</td>
                                 <td>{{ stock.stock_sn.item_specmain }}</td>
                                 {% if stock.stock_change == '入庫' %}

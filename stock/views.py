@@ -121,6 +121,7 @@ def stockadd(request):
     }
     return HttpResponse(template.render(context, request))
 
+
 @login_required
 def stockupdate(request, stock_id):
     stock = Stock2.objects.get(id=stock_id)
@@ -135,6 +136,7 @@ def stockupdate(request, stock_id):
         'form': form,
     }
     return HttpResponse(template.render(context, request))
+
 
 @login_required
 def projectadd(request):
@@ -211,6 +213,18 @@ def item(request):
 
 
 @login_required
+def itemdetail(request, item_id):
+    template = loader.get_template('item/detail.html')
+    item = Item.objects.get(id=item_id)
+    stock_list = Stockv3.objects.filter(stock_sn=item_id).order_by("-stock_updatetime")
+    context = {
+        'item': item,
+        'stock_list': stock_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
 def item_list_del(request):
     template = loader.get_template('item/list_delete.html')
     item_list = Item.objects.filter(item_isvalid=False).order_by("-item_updatetime")
@@ -266,6 +280,9 @@ def itemdelete(request, item_id):
     item.item_isvalid = False
     item.save()
     return redirect("/stock/item/")
+
+
+
 
 
 @login_required
