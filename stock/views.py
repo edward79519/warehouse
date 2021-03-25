@@ -377,6 +377,7 @@ def stockv3confirm(request, stock_id):
         item = Item.objects.get(id=stock.stock_sn.id)
         if stock.stock_change == "出庫":
             count = -stock.stock_cnt
+            item.itemadd(count)
         else:
             count = stock.stock_cnt
             item.itemadd(count)
