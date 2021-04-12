@@ -4,9 +4,11 @@ from django.template import loader
 from django.utils import timezone
 from .models import Stock, Company, Inaunit, Project, Warehouse, Stock2, Stockv3, Item, Category
 from .form import StockModelForm, Stock2ModelForm, ProjectModelForm, CompanyModelForm
-from .form import InaunitModelForm, WarehouseModelForm, ItemModelForm, ItemUpdateModelForm, CateModelFoem, Stock3ModelForm, Stock3UpdateModelForm, Stock3ConfirmModelForm
+from .form import InaunitModelForm, WarehouseModelForm, ItemModelForm, ItemUpdateModelForm, CateModelFoem, \
+    Stock3ModelForm, Stock3UpdateModelForm, Stock3ConfirmModelForm
 from django.contrib.auth.decorators import login_required
-import datetime
+
+
 # Create your views here.
 
 @login_required
@@ -96,6 +98,7 @@ def warehouseupdate(request, house_id):
         'form': form,
     }
     return HttpResponse(template.render(context, request))
+
 
 @login_required
 def stock(request):
@@ -234,14 +237,13 @@ def item_list_del(request):
     return HttpResponse(template.render(context, request))
 
 
-
 @login_required
 def itemadd(request):
     form = ItemModelForm()
     template = loader.get_template('item/add.html')
     if request.method == 'POST':
         cateid = request.POST['item_cate']
-        itemcnt = Item.objects.filter(item_addtime__date=timezone.now().date(), item_cate_id=cateid).count()+1
+        itemcnt = Item.objects.filter(item_addtime__date=timezone.now().date(), item_cate_id=cateid).count() + 1
         catename = Category.objects.get(id=cateid).cate_en
         serial = "{}{}{}".format(catename, timezone.now().strftime("%Y%m%d"), str(itemcnt).zfill(3))
         query = request.POST.copy()
@@ -280,9 +282,6 @@ def itemdelete(request, item_id):
     item.item_isvalid = False
     item.save()
     return redirect("/stock/item/")
-
-
-
 
 
 @login_required
@@ -389,7 +388,8 @@ def stockv3confirm(request, stock_id):
 @login_required
 def stockv3del(request, stock_id):
     stock = Stockv3.objects.get(id=stock_id)
-    if stock.stock_isvalid == False:
+    if not stock.stock_isvalid:
         stock.delete()
         return redirect("/stock/inout/")
     return redirect("/stock/inout/")
+

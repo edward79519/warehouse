@@ -74,13 +74,15 @@ WSGI_APPLICATION = 'warehouse.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+'''
+# use SQLlite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
 '''
 # use mysql
 DATABASES = {
@@ -94,6 +96,25 @@ DATABASES = {
     }
 }
 '''
+
+# use MSSQL
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'test': {
+        'ENGINE': 'mssql',
+        'NAME': 'warehouse',
+        'USER': 'edward',
+        'PASSWORD': 'sc22805',
+        'HOST': '192.168.11.218',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
