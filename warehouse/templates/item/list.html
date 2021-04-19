@@ -43,8 +43,10 @@
                                     <td>{{ item.item_specsub }}</td>
                                     <td>{{ item.item_cnt }}</td>
                                     <td>
+                                        {% if not user.get_username == "ina_pt" %}
                                         <a href="{% url 'Item_update' item.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
                                         <a href="{% url 'Item_delete' item.id %}" class="btn btn-danger btn-sm" role="button">刪除</a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -31,7 +31,9 @@
                                 <td>{{ ina.ina_name }}</td>
                                 <td>{{ ina.ina_remark }}</td>
                                 <td>
+                                    {% if not user.get_username == "ina_pt" %}
                                     <a href="{% url 'Ina_update' ina.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

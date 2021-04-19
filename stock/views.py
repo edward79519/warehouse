@@ -321,8 +321,8 @@ def cateupdate(request, cate_id):
 @login_required
 def stockv3(request):
     template = loader.get_template('stockv3/list.html')
-    stock_list = Stockv3.objects.filter(stock_isvalid=True).order_by("-stock_addtime")
-    stock_list_uncheck = Stockv3.objects.filter(stock_isvalid=False).order_by("-stock_addtime")
+    stock_list = Stockv3.objects.filter(stock_isvalid=True, stock_sn__item_isvalid=True).order_by("-stock_addtime")
+    stock_list_uncheck = Stockv3.objects.filter(stock_isvalid=False, stock_sn__item_isvalid=True).order_by("-stock_addtime")
     context = {
         'stock_list': stock_list,
         'stock_list_uncheck': stock_list_uncheck,

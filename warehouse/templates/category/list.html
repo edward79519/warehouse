@@ -28,7 +28,9 @@
                                     <td>{{ cate.cate_en }}</td>
                                     <td>{{ cate.cate_name }}</td>
                                     <td>
+                                        {% if not user.get_username == "ina_pt" %}
                                         <a href="{% url 'Cate_update' cate.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

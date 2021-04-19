@@ -42,7 +42,9 @@
                                 <td style="width:15%">{{ project.proj_downtime|date:"m/d, Y" }}</td>
                                 <td>{{ project.proj_remark }}</td>
                                 <td>
+                                    {% if not user.get_username == "ina_pt" %}
                                     <a href="{% url 'Project_update' project.id %}" class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
