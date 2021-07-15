@@ -1,0 +1,67 @@
+{% extends 'frame/base.html' %}
+{% load stock_extra %}
+
+{% block title %}倉庫詳細資料{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-5">{{ item.item_sn }} - {{ item.item_name }}</h1>
+            <p>更新時間: {{ item.item_updatetime|date:"Y-m-d H:i" }}</p>
+            {% if item.item_isvalid and not user.get_username == "ina_pt"%}
+            <a href="{% url 'Item_update' item.id %}" class="btn btn-primary">編輯</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <h2>詳細資料</h2>
+            <table class="table table-hover table-borderless">
+                <tbody>
+                    <tr>
+                        <th scope="raw">狀態</th>
+                        <td class="text-danger">
+                            {% if not item.item_isvalid %}
+                            已刪除
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="raw">料號</th>
+                        <td>{{ item.item_sn }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="raw">名稱</th>
+                        <td>{{ item.item_name }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="raw">分類</th>
+                        <td>{{ item.item_cate }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="raw">主規格</th>
+                        <td>{{ item.item_specmain }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="raw">副規格</th>
+                        <td>{{ item.item_specsub }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="raw">庫存數量</th>
+                        <td>{{ item.item_cnt }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="raw">備註</th>
+                        <td>{{ item.item_remark }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

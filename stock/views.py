@@ -8,8 +8,10 @@ from .form import InaunitModelForm, WarehouseModelForm, ItemModelForm, ItemUpdat
     Stock3ModelForm, Stock3UpdateModelForm, Stock3ConfirmModelForm
 from django.contrib.auth.decorators import login_required
 
+from django.core.paginator import Paginator
 
 # Create your views here.
+
 
 @login_required
 def comp(request):
@@ -81,6 +83,12 @@ def warehouse(request):
         'form': form,
     }
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def warehouse_detail(request, warehouse_id):
+    warehouse = Warehouse.objects.get(id=warehouse_id)
+    item_list = Item.objects.filter()
 
 
 @login_required
@@ -326,6 +334,30 @@ def stockv3(request):
     context = {
         'stock_list': stock_list,
         'stock_list_uncheck': stock_list_uncheck,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def stockv3_page(request):
+    template = loader.get_template('stockv3/list2.html')
+    unstock_list = Stockv3.objects.filter(stock_isvalid=False, stock_sn__item_isvalid=True).order_by("-stock_addtime")
+    stock_list = Stockv3.objects.filter(stock_isvalid=True, stock_sn__item_isvalid=True).order_by("-stock_addtime")
+    numinpage = 10
+    if request.GET.get('numinpage'):
+        numinpage = request.GET.get('numinpage')
+    unstock_page = Paginator(unstock_list, numinpage)
+    stock_page = Paginator(stock_list, numinpage)
+    unpage_num = request.GET.get('unchecked_page')
+    page_num = request.GET.get('checked_page')
+    unpage_obj = unstock_page.get_page(unpage_num)
+    page_obj = stock_page.get_page(page_num)
+    context = {
+        'unpage_obj': unpage_obj,
+        'unstock_cnt': unstock_list.count(),
+        'page_obj': page_obj,
+        'stock_cnt': stock_list.count(),
+
     }
     return HttpResponse(template.render(context, request))
 
