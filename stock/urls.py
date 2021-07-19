@@ -1,7 +1,8 @@
 from django.urls import path
-from . import views
+from . import views, ajax
 
 urlpatterns = [
+    path('ajax/getitemcount/', ajax.get_item_count),
     path('company/', views.comp, name='Comp_list'),
     path('company/add/', views.companyadd, name='Company_add'),
     path('company/<int:comp_id>/add/', views.companyupdate, name='Company_update'),

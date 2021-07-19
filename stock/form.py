@@ -135,6 +135,7 @@ class ItemModelForm(forms.ModelForm):
             'item_remark': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
+
 class ItemUpdateModelForm(forms.ModelForm):
 
     class Meta:
@@ -156,7 +157,7 @@ class Stock3ModelForm(forms.ModelForm):
         widgets = {
             'stock_id': forms.TextInput(attrs={'class': 'form-control'}),
             'stock_change': forms.RadioSelect(attrs={'class': 'custom-control-input'}),
-            'stock_sn': forms.Select(attrs={'class': 'custom-select'}),
+            'stock_sn': forms.Select(attrs={'class': 'form-control'}),
             'stock_cnt': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
             'stock_currency': forms.Select(attrs={'class': 'custom-select'}),
             'stock_price': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),

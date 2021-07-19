@@ -2,6 +2,7 @@
 
 {% block title %}庫存出入庫{% endblock %}
 {% block content %}
+{% load static %}
 
 <div class="container">
     <div class="row">
@@ -26,10 +27,15 @@
             </div>
         </div>
 
-        <div class="form-row mb-3">
+        <div class="form-row mb-3 align-items-end">
             <div class="col-lg-6">
                 <label for="id_{{ form.stock_sn.name }}">品項</label>
                 {{ form.stock_sn }}
+            </div>
+            <div class="col-lg-6">
+                <div class="align-items-end">
+                    <p>剩餘數量：<span id="item_count"></span>。<span class="btn btn-sm btn-primary" id="put_btn">帶入</span> </p>
+                </div>
             </div>
         </div>
         <div class="form-row mb-3">
@@ -85,6 +91,12 @@
         </div>
     </form>
 </div>
-
-
+<script>
+    $(document).ready(function (){
+        $("#id_{{ form.stock_sn.name }}").select2({
+            theme: 'bootstrap4',
+        });
+    });
+</script>
+<script src="{% static 'custom/js/ajax_stock.js' %}"></script>
 {% endblock %}
